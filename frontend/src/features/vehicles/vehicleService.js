@@ -10,13 +10,7 @@ const createVehicle = async (vehicleData) => {
   return response.data
 }
 
-// Get user goals
-const getVehicles = async () => {
-  
-  const response = await axios.get(API_URL)
 
-  return response.data
-}
 
 // Get vehicle by ID
 const getVehicleById = async (vehicleId) => {
@@ -70,7 +64,6 @@ const deleteVehicle = async (vehicleId, token) => {
 
 const vehicleService = {
   createVehicle,
-  getVehicles,
   getVehicleById,
   updateVehicle,
   deleteVehicle,

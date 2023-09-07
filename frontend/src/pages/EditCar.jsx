@@ -1,22 +1,25 @@
 import React from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { useState, useEffect } from 'react'
-import {  useDispatch } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getVehicleById, updateVehicle } from '../features/vehicles/vehicleSlice'
 
 
 function EditCar() {
-    const { vehicleId } = useParams();
+    const { id } = useParams();
+    const { vehicles } = useSelector((state) => state.vehicle)
+    const cars = vehicles.find(car => car._id === id)
+    console.log(cars)
     const [formData, setFormData] = useState({
-      name: '',
-      desc: '',
-      price: '',
-      primaryImage: '',
-      secondaryImage: '',
-      quantity: '',
-      manufacturer: '',
-      model: ''
+      name: cars?.name,
+      desc: cars?.desc,
+      price: cars?.price,
+      primaryImage: cars?.primaryImage,
+      secondaryImage: cars?.secondaryImage,
+      quantity: cars?.quantity,
+      manufacturer: cars?.manufacturer,
+      model: cars?.model
     })
     
     const { name, desc, price, primaryImage, secondaryImage, quantity, manufacturer, model } = formData;
@@ -26,10 +29,10 @@ function EditCar() {
     
     
       useEffect(() => {
-        dispatch(getVehicleById(vehicleId)); 
+        dispatch(getVehicleById(id)); 
 
         
-      }, [dispatch, vehicleId]);
+      }, [dispatch, id]);
     
       const onChange = (e) => {
         setFormData((prevState) => ({
@@ -40,7 +43,7 @@ function EditCar() {
     
       const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateVehicle({ id: vehicleId, vehicleData: formData }));
+        dispatch(updateVehicle({ id: id, vehicleData: formData }));
       };
     
     

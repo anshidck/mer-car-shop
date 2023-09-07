@@ -4,39 +4,19 @@ import vehicleService from './vehicleService'
 const initialState = {
   vehicles: [],
   car: [],
-  cars: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: '',
 }
 
-// Create new goal
+// Create new vehicle
 export const createVehicle = createAsyncThunk(
   'vehicles/create',
   async (vehicleData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
       return await vehicleService.createVehicle(vehicleData, token)
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
-    }
-  }
-)
-
-// Get user goals
-export const getVehicles = createAsyncThunk(
-  'vehicles/getAll',
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token
-      return await vehicleService.getVehicles(token)
     } catch (error) {
       const message =
         (error.response &&
@@ -117,7 +97,7 @@ export const updateVehicle = createAsyncThunk(
 );
 
 
-// Delete user goal
+// Delete vehicle
 export const deleteVehicle = createAsyncThunk(
   'vehicles/delete',
   async (id, thunkAPI) => {
@@ -163,22 +143,9 @@ export const vehicleSlice = createSlice({
       .addCase(fetchCar.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.cars = action.payload
-      })
-      .addCase(fetchCar.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-      })
-      .addCase(getVehicles.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getVehicles.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
         state.vehicles = action.payload
       })
-      .addCase(getVehicles.rejected, (state, action) => {
+      .addCase(fetchCar.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -17,7 +17,7 @@ app.use('/api/auth', userRouter);
 app.use('/api/vehicle', vehicleRouter)
 
 // Serve frontend
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
     app.use(express.static(path.join(__dirname, '../frontend/build')));
   
     app.get('*', (req, res) =>

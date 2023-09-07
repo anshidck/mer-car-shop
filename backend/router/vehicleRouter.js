@@ -16,17 +16,7 @@ router.post('/', asyncHandler(async (req, res) => {
     }
 }));
 
-// Get all vehicles
-router.get('/', asyncHandler(async (req, res) => {
-    try {
-        const vehicles = await Vehicle.find();
-        res.json(vehicles);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-}));
-
-router.get('/search', asyncHandler(async (req, res) => {
+router.get('/',protect, asyncHandler(async (req, res) => {
     const keyword = req.query.search
         ? {
             $or: [
@@ -36,8 +26,8 @@ router.get('/search', asyncHandler(async (req, res) => {
         }
         : {};
 
-    const users = await Vehicleehicle.find(keyword).find({ _id: { $ne: req.user._id } });
-    res.send(users);
+    const vehicles = await Vehicle.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.send(vehicles);
 }));
 
 // Define the route to get a vehicle by its ID

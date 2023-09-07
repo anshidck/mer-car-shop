@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import AdminCard from '../components/AdminCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getVehicles } from '../features/vehicles/vehicleSlice'
+import { fetchCar } from '../features/vehicles/vehicleSlice'
 import { Link } from 'react-router-dom'
 
 function AdminDashboard() {
     const {vehicles} = useSelector((state) => state.vehicle)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getVehicles())
+        dispatch(fetchCar())
     },[dispatch])
   return (
     <div className='p-3 px-7 flex flex-col gap-5'>
